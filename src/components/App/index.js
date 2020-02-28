@@ -4,6 +4,7 @@ import './index.css';
 import Header from '../Header';
 import List from '../List';
 import Note from '../Note';
+import { generateId } from '../../utils'; // 랜덤 ID 생성 함수
 
 class App extends React.Component {
   state = {
@@ -31,21 +32,41 @@ class App extends React.Component {
     this.setState({ activeId: id});
   }
 
-  // 편집 이벤트 핸들러 / type과 event 객체 전달받음
   handleEditNote = (type, e) => {
-    // 새 notes 어레이 생성 / ... = 전에 있는
     const notes = [ ...this.state.notes ];
-
-    // notes에서 현재 activeId 와 일치하는 노트 객체 찾기
-    const note = notes.find((item) => item.id === this.state.activeId)
-
-    // 객체의 속성에 값 할당. 유저가 입력한 값(note.title 또는 note.contents)
+    const note = notes.find((item) => item.id === this.state.activeId);
     note[type] = e.target.value;
-
-    // note에 새 array를 할당하여 state 변경
     this.setState({
       notes,
     });
+  }
+
+  handleAddNote = () => {
+    const id = generateId(); // 랜덤 ID 생성
+    this.setState({
+      notes: [
+        ...this.state.notes,
+        {
+          id,
+          title: '제목',
+          contents: '내용',
+        },
+      ],
+      activeId: id,
+    });
+  }
+
+  handleDeleteNote = () => {
+    // 현재 선택한 노트를 제외한 새로운 array를 생성
+    const notes =
+          // item.id가 여기 state.activeId 랑 다른 애들 모두 다
+          this.state.notes.filter((item) => item.id !== this.state.activeId);
+    // 새 array를 notes에 할당
+    this.setState({
+      notes,
+      // 새로운 notes array에 첫번째 노트의 id로 지정 (노트 삭제하면 자동으로 첫번째 노트가 선택되도록)
+      activeId: notes.length === 0 ? null : notes[0].id
+    })
   }
 
   render() {
@@ -53,7 +74,10 @@ class App extends React.Component {
     const activeNote = notes.filter((item) => item.id === activeId)[0];
     return (
       <div className="app">
-        <Header />
+        <Header 
+          onAddNote={this.handleAddNote} //메소드 전달
+          onDeleteNote={this.handleDeleteNote} //메소드 전달
+        />
         <div className="container">
           <List 
             notes={notes} 
@@ -64,7 +88,7 @@ class App extends React.Component {
             notes.length !== 0 && 
               <Note 
                 note={activeNote} 
-                onEditNote={this.handleEditNote} //메소드 전달
+                onEditNote={this.handleEditNote}
               />
           }
         </div>
