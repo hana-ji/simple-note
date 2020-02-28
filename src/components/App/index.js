@@ -31,13 +31,26 @@ class App extends React.Component {
     this.setState({ activeId: id});
   }
 
+  // 편집 이벤트 핸들러 / type과 event 객체 전달받음
+  handleEditNote = (type, e) => {
+    // 새 notes 어레이 생성 / ... = 전에 있는
+    const notes = [ ...this.state.notes ];
+
+    // notes에서 현재 activeId 와 일치하는 노트 객체 찾기
+    const note = notes.find((item) => item.id === this.state.activeId)
+
+    // 객체의 속성에 값 할당. 유저가 입력한 값(note.title 또는 note.contents)
+    note[type] = e.target.value;
+
+    // note에 새 array를 할당하여 state 변경
+    this.setState({
+      notes,
+    });
+  }
+
   render() {
     const { notes, activeId } = this.state;
-    // 현재 활성화 된 객체를 찾아서 activeNote 변수에 할당
-    // array의 .filter()를 활용해 activeId와 일치하는 id를 가진 노트객체 찾음
     const activeNote = notes.filter((item) => item.id === activeId)[0];
-    // filter() 배열에서만 사용가능, 사용법: 배열.filter((인자) => 인자.인자템 === 비교할 값)
-    // 위에 것의 결과는 조건문에 맞는 배열을 반환한다.
     return (
       <div className="app">
         <Header />
@@ -47,11 +60,12 @@ class App extends React.Component {
             activeId={activeId}
             onListItemClick={this.handleListItemClick}
             />
-          {/* activeNote가 존재할 때 <Note /> 를 랜더링 */}
-          {/* note 속성에 활성화 된 노트객체인 activeNote 전달 */}
           {
-            // 0이 아니여야 랜더링(Note라는 컴포넌트를 보여줌), 0이면 안보여줌
-            notes.length !== 0 && <Note note={activeNote} />
+            notes.length !== 0 && 
+              <Note 
+                note={activeNote} 
+                onEditNote={this.handleEditNote} //메소드 전달
+              />
           }
         </div>
       </div>
