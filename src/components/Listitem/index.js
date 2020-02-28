@@ -8,7 +8,7 @@ class Listitem extends React.Component {
     return (
       <div 
         className={active ? "list-item active" : "list-item"}
-        onClick={onClick} //onClick 이벤트 발생 시 onClick() 호출!
+        onClick={onClick}
       >
         <div className="title">{title ? title : '제목'}</div>
         <div className="list-item-contents">{contents !== '' ? contents : '내용'}</div>
