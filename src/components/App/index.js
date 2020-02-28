@@ -14,10 +14,20 @@ class App extends React.Component {
         id: '_asdf3das',
         title: '제목1',
         contents: '내용1'
+      },
+      {
+        id: '_ikdiekdk',
+        title: '제목2',
+        contents: '내용2'
+      },
+      {
+        id: '_3ldlijss',
+        title: '제목3',
+        contents: '내용3'
       }
     ],
     // List에서 유저가 선택하여 활성화 된 노트의 id를 기록
-    activeId: null,
+    activeId: '_3ldlijss', // 세 번째 노트가 활성화되었을 때!
   }
   render() {
     return (
