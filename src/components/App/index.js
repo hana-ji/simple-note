@@ -6,9 +6,7 @@ import List from '../List';
 import Note from '../Note';
 
 class App extends React.Component {
-  // state: UI의 상태를 기록하는 데이터
   state = {
-    // 앱의 노트 정보를 담은 array
     notes: [
       {
         id: '_asdf3das',
@@ -28,14 +26,24 @@ class App extends React.Component {
     ],
     activeId: '_3ldlijss',
   }
+
+  // 이벤트 핸들러 메소드
+  // state 중에 id를 가져와서 (이벤트 발생시) activeId로 새로 랜더링하겠다
+  handleListItemClick = (id) => {
+    this.setState({ activeId: id});
+  }
+
   render() {
     const { notes, activeId } = this.state;
     return (
-      <div className="App">
+      <div className="app">
         <Header />
         <div className="container">
-          {/* list가 노트들이 제목과 내용 + 어떤 노트가 활성화됬는지 알기위해 props로 전달 */}
-          <List notes={notes} activeId={activeId}/>
+          <List 
+            notes={notes} 
+            activeId={activeId}
+            onListItemClick={this.handleListItemClick} //메소드 전달
+            />
           <Note />
         </div>
       </div>
