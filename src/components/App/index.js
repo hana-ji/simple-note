@@ -4,7 +4,7 @@ import './index.css';
 import Header from '../Header';
 import List from '../List';
 import Note from '../Note';
-import { generateId } from '../../utils'; // 랜덤 ID 생성 함수
+import { generateId } from '../../utils';
 
 class App extends React.Component {
   state = {
@@ -42,7 +42,7 @@ class App extends React.Component {
   }
 
   handleAddNote = () => {
-    const id = generateId(); // 랜덤 ID 생성
+    const id = generateId();
     this.setState({
       notes: [
         ...this.state.notes,
@@ -57,14 +57,10 @@ class App extends React.Component {
   }
 
   handleDeleteNote = () => {
-    // 현재 선택한 노트를 제외한 새로운 array를 생성
     const notes =
-          // item.id가 여기 state.activeId 랑 다른 애들 모두 다
-          this.state.notes.filter((item) => item.id !== this.state.activeId);
-    // 새 array를 notes에 할당
+      this.state.notes.filter((item) => item.id !== this.state.activeId);
     this.setState({
       notes,
-      // 새로운 notes array에 첫번째 노트의 id로 지정 (노트 삭제하면 자동으로 첫번째 노트가 선택되도록)
       activeId: notes.length === 0 ? null : notes[0].id
     })
   }
@@ -75,8 +71,8 @@ class App extends React.Component {
     return (
       <div className="app">
         <Header 
-          onAddNote={this.handleAddNote} //메소드 전달
-          onDeleteNote={this.handleDeleteNote} //메소드 전달
+          onAddNote={this.handleAddNote}
+          onDeleteNote={this.handleDeleteNote}
         />
         <div className="container">
           <List 

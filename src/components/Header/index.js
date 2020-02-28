@@ -11,7 +11,6 @@ class Header extends React.Component {
           <span>Hana's 심플노트</span>
         </div>
         <div className="buttons">
-          {/* onAddNote를 추가 버튼의 onClick 이벤트에 작성 */}
           <button onClick={onAddNote}>추가</button>
           <button onClick={onDeleteNote}>삭제</button>
         </div>
