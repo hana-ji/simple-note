@@ -26,15 +26,16 @@ class App extends React.Component {
         contents: '내용3'
       }
     ],
-    // List에서 유저가 선택하여 활성화 된 노트의 id를 기록
-    activeId: '_3ldlijss', // 세 번째 노트가 활성화되었을 때!
+    activeId: '_3ldlijss',
   }
   render() {
+    const { notes, activeId } = this.state;
     return (
       <div className="App">
         <Header />
         <div className="container">
-          <List />
+          {/* list가 노트들이 제목과 내용 + 어떤 노트가 활성화됬는지 알기위해 props로 전달 */}
+          <List notes={notes} activeId={activeId}/>
           <Note />
         </div>
       </div>
