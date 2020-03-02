@@ -19,9 +19,8 @@ import './index.css';
 //   }
 // }
 
-// 배열로 잡힌다고 해서 {},{} 하나하나 설정해줬는데 삭제버튼이 안먹음
-const Header = ({onAddNote}, {onDeleteNote}) => {
-  // const {  } = props
+const Header = (props) => {
+  const { onAddNote, onDeleteNote } = props;
   return(
     <div className="header">
       <div className="title">
@@ -29,6 +28,7 @@ const Header = ({onAddNote}, {onDeleteNote}) => {
       </div>
       <div className="buttons">
         <button onClick={onAddNote}>추가</button>
+        {console.log(onAddNote)}
         <button onClick={onDeleteNote}>삭제</button>
         {console.log(onDeleteNote)}
       </div>
